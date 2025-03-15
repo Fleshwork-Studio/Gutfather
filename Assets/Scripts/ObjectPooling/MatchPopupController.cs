@@ -21,7 +21,7 @@ public class MatchPopupController : MonoBehaviour
     {
         matchController = MatchComboController.Instance;
 
-        matchController.OnMatch += SpawnObject;
+        matchController.OnSingleMatch += SpawnObject;
 
         for (int i = 0; i < poolSize; i++)
         {

@@ -7,7 +7,15 @@ public class MatchComboController : MonoBehaviour
 {
     public static MatchComboController Instance;
 
-    public event Action<MatchType, GemTypeSO, Vector2Int> OnMatch;
+    /// <summary>
+    /// Returns single match and theirs general data
+    /// </summary>
+    public event Action<MatchType, GemTypeSO, Vector2Int> OnSingleMatch;
+
+    /// <summary>
+    /// Returns hashset of positions of a single match
+    /// </summary>
+    public event Action<List<Vector2Int>> OnMatchPositions;
 
     public enum MatchType
     {
@@ -84,7 +92,10 @@ public class MatchComboController : MonoBehaviour
             matches.Add(pos);
 
         var gemTypeSO = grid.GetValue(x, y).GetValue().GetType();
-        OnMatch?.Invoke(matchType, gemTypeSO, matchPositions[matchPositions.Count / 2]); // Triggers event 
+
+        // Triggers events
+        OnSingleMatch?.Invoke(matchType, gemTypeSO, matchPositions[matchPositions.Count / 2]);
+        OnMatchPositions?.Invoke(matchPositions);
 
         // Debug.Log($"{(dx == 1 ? "Horizontal" : "Vertical")} {matchType} match type");
     }
@@ -131,7 +142,6 @@ public class MatchComboController : MonoBehaviour
                         // Adds direction to the wrong list if there are wrong gem on the way of checking
                         wrongDirections.Add(mult);
                     }
-                        
                 }
             }
 
@@ -142,7 +152,10 @@ public class MatchComboController : MonoBehaviour
                 if (additionalGems.All(matches.Contains)) continue;
 
                 foreach (Vector2Int position in additionalGems)
+                {
                     matches.Add(position);
+                    baseMatch.Add(position);
+                }
 
                 isCross = true;
             }

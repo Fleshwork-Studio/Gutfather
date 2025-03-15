@@ -151,8 +151,8 @@ public class Match3 : MonoBehaviour
                     }
                 }
             }
-            yield return new WaitForSeconds(0.06f);
         }
+        yield return new WaitForSeconds(0.3f);
     }
 
     public IEnumerator ExplodeGems(List<Vector2Int> matches)
@@ -167,7 +167,7 @@ public class Match3 : MonoBehaviour
             // gem.DestroyGem();
         }
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
     }
 
     bool IsEmptyPosition(Vector2Int gridPosition) => grid.GetValue(gridPosition.x, gridPosition.y) == null;
