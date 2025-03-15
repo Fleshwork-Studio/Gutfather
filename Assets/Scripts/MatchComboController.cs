@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class MatchComboController : MonoBehaviour
 {
     public static MatchComboController Instance;
 
-    enum MatchType
+    public event Action<MatchType, GemTypeSO, Vector2Int> OnMatch;
+
+    public enum MatchType
     {
         Null,
         Three3,
@@ -76,10 +79,14 @@ public class MatchComboController : MonoBehaviour
             matchType = MatchType.Cross;
         }
 
+        // Adds all matches to the matches HashSet
         foreach (var pos in matchPositions)
             matches.Add(pos);
 
-        Debug.Log($"{(dx == 1 ? "Horizontal" : "Vertical")} {matchType} match type");
+        var gemTypeSO = grid.GetValue(x, y).GetValue().GetType();
+        OnMatch?.Invoke(matchType, gemTypeSO, matchPositions[matchPositions.Count / 2]); // Triggers event 
+
+        // Debug.Log($"{(dx == 1 ? "Horizontal" : "Vertical")} {matchType} match type");
     }
 
     // Finds T and L shaped matches
@@ -92,7 +99,7 @@ public class MatchComboController : MonoBehaviour
 
         bool isCross = false;
 
-        GemType gemType = grid.GetValue(baseMatch[0]).GetValue().GetType(); // Main gem type
+        GemTypeSO gemType = grid.GetValue(baseMatch[0]).GetValue().GetType(); // Main gem type
 
         for (int x = 0; x < baseMatch.Count; x++)
         {

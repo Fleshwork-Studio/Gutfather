@@ -3,15 +3,15 @@
 [RequireComponent(typeof(SpriteRenderer))]
 public class Gem : MonoBehaviour
 {
-    public GemType type;
+    public GemTypeSO type;
 
-    public void SetType(GemType type)
+    public void SetType(GemTypeSO type)
     {
         this.type = type;
         GetComponent<SpriteRenderer>().sprite = type.sprite;
     }
 
-    public GemType GetType() => type;
+    public GemTypeSO GetType() => type;
 
     public void DestroyGem() => Destroy(gameObject);
 }

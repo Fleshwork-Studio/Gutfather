@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Match3 : MonoBehaviour
 {
     public static int HEIGHT { get; } = 10;
@@ -14,7 +15,7 @@ public class Match3 : MonoBehaviour
     [SerializeField] Vector3 originPosition = Vector3.zero;
 
     [SerializeField] Gem gemPrefab;
-    [SerializeField] GemType[] gemTypes;
+    [SerializeField] GemTypeSO[] gemTypes;
     [SerializeField] Ease ease = Ease.InQuad;
 
     [SerializeField] GridTemplate gridTemplate;
@@ -144,12 +145,13 @@ public class Match3 : MonoBehaviour
                             gem.transform
                                 .DOLocalMove(grid.GetWorldPositionCenter(x, y), 0.2f)
                                 .SetEase(ease);
-                            yield return new WaitForSeconds(0.06f);
+                            
                             break;
                         }
                     }
                 }
             }
+            yield return new WaitForSeconds(0.06f);
         }
     }
 
@@ -160,12 +162,12 @@ public class Match3 : MonoBehaviour
             var gem = grid.GetValue(match.x, match.y).GetValue();
             grid.SetValue(match.x, match.y, null);
 
-            gem.transform.DOPunchScale(Vector3.one * 0.1f, 0.1f, 1, 0.5f);
+            gem.transform.DOPunchScale(Vector3.one * 0.6f, 0.5f, 5, 1f).OnComplete(() => gem.DestroyGem());
 
-            yield return new WaitForSeconds(0.1f);
-
-            gem.DestroyGem();
+            // gem.DestroyGem();
         }
+
+        yield return new WaitForSeconds(0.6f);
     }
 
     bool IsEmptyPosition(Vector2Int gridPosition) => grid.GetValue(gridPosition.x, gridPosition.y) == null;
