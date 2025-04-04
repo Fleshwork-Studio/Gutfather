@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Gutfather.Assets.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class Match3 : MonoBehaviour
     private void Start()
     {
         InitializeGrid();
-        
+
         DeselectGem();
     }
 
@@ -40,11 +41,11 @@ public class Match3 : MonoBehaviour
         grid = GridSystem<GridObject<Gem>>.VerticalGrid(WIDTH, HEIGHT, cellSize, originPosition);
 
 
-        for(int x = 0; x < WIDTH; x++)
+        for (int x = 0; x < WIDTH; x++)
         {
             for (int y = 0; y < HEIGHT; y++)
             {
-                if(gridTemplate.IsUnitPlayable(x, y)) // Makes grid empty if it's disabled
+                if (gridTemplate.IsUnitPlayable(x, y)) // Makes grid empty if it's disabled
                 {
                     CreateGem(x, y);
                 }
@@ -82,6 +83,9 @@ public class Match3 : MonoBehaviour
         else if (selectedGem == Vector2.one * -1) // If there are no gems selected
         {
             SelectGem(gridPos);
+
+            var gemSelected = new NewGemSelected { position = gridPos };
+            Bus.Publish(gemSelected);
         }
         else // If there are another gem selected - return true
         {
@@ -145,7 +149,7 @@ public class Match3 : MonoBehaviour
                             gem.transform
                                 .DOLocalMove(grid.GetWorldPositionCenter(x, y), 0.2f)
                                 .SetEase(ease);
-                            
+
                             break;
                         }
                     }
