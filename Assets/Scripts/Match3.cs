@@ -22,7 +22,7 @@ public class Match3 : MonoBehaviour
     [SerializeField] GridTemplate gridTemplate;
     GridSystem<GridObject<Gem>> grid;
 
-    Vector2Int selectedGem;
+    Vector2Int selectedGemPos;
 
     private void Awake()
     {
@@ -76,21 +76,25 @@ public class Match3 : MonoBehaviour
 
         if (grid.GetValue(gridPos.x, gridPos.y).IsVoid()) return false; // Returns if selected grid is empty
 
-        else if (selectedGem == gridPos) // Deselects if clicking on already selected gem
+        var gemSelectedEvent = new NewGemSelected();
+
+        if (selectedGemPos == gridPos) // Deselects if clicking on already selected gem
         {
             DeselectGem();
         }
-        else if (selectedGem == Vector2.one * -1) // If there are no gems selected
+        else if (selectedGemPos == Vector2.one * -1) // If there are no gems selected
         {
             SelectGem(gridPos);
-
-            var gemSelected = new NewGemSelected { position = gridPos };
-            Bus.Publish(gemSelected);
         }
         else // If there are another gem selected - return true
         {
+            gemSelectedEvent.position = Vector2Int.one * -1;
+            Bus.Publish(gemSelectedEvent);
+
             return true;
         }
+        gemSelectedEvent.position = selectedGemPos;
+        Bus.Publish(gemSelectedEvent);
 
         return false;
     }
@@ -181,11 +185,11 @@ public class Match3 : MonoBehaviour
         return gridPosition.x >= 0 && gridPosition.x < WIDTH && gridPosition.y >= 0 && gridPosition.y < HEIGHT;
     }
 
-    public void DeselectGem() => selectedGem = new Vector2Int(-1, -1);
-    void SelectGem(Vector2Int gridPos) => selectedGem = gridPos;
+    public void DeselectGem() => selectedGemPos = new Vector2Int(-1, -1);
+    void SelectGem(Vector2Int gridPos) => selectedGemPos = gridPos;
 
-    public Vector2Int GetSelectedGemPos() => selectedGem;
-    public bool IsGemSelected() => selectedGem != new Vector2Int(-1, -1);
+    public Vector2Int GetSelectedGemPos() => selectedGemPos;
+    public bool IsGemSelected() => selectedGemPos != new Vector2Int(-1, -1);
 
     public GridSystem<GridObject<Gem>> GetGrid() => grid;
 }
