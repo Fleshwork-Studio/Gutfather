@@ -9,12 +9,12 @@ public class VFXSelectedGem : MonoBehaviour
     [SerializeField] ParticleSystem particleSystem;
     void Awake()
     {
-        Bus.Subscribe<NewGemSelected>(EnableVFX);
+        Bus.Subscribe<NewGemSelectedEvent>(EnableVFX);
 
         gameObject.SetActive(false);
     }
 
-    private void EnableVFX(NewGemSelected e)
+    private void EnableVFX(NewGemSelectedEvent e)
     {
         if (e.position == Vector2Int.one * -1)
         {

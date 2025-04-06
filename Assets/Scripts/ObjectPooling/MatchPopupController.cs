@@ -19,9 +19,7 @@ public class MatchPopupController : MonoBehaviour
 
     private void Start()
     {
-        matchController = MatchComboController.Instance;
-
-        matchController.OnSingleMatch += SpawnObject;
+        Bus.Subscribe<ComboMatchEvent>(SpawnObject);
 
         for (int i = 0; i < poolSize; i++)
         {
@@ -37,17 +35,17 @@ public class MatchPopupController : MonoBehaviour
         pool.Enqueue(popup);
     }
 
-    public void SpawnObject(MatchComboController.MatchType matchType, GemTypeSO gemType, Vector2Int position)
+    public void SpawnObject(ComboMatchEvent e)
     {
-        if(pool.Count > 0)
+        if (pool.Count > 0)
         {
             VFXMatchPopup popup = pool.Dequeue();
-            popup.Enable(matchType, gemType, position);
+            popup.Enable(e);
         }
         else
         {
             GameObject obj = Instantiate(prefab);
-            obj.GetComponent<VFXMatchPopup>().Enable(matchType, gemType, position);
+            obj.GetComponent<VFXMatchPopup>().Enable(e);
         }
     }
 }

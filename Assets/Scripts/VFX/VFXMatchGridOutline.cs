@@ -24,12 +24,12 @@ public class VFXMatchGridOutline : MonoBehaviour
 
     private void Start()
     {
-        MatchComboController.Instance.OnMatchPositions += OnMatch;
+        Bus.Subscribe<ComboMatchEvent>(OnMatch);
     }
 
-    private void OnMatch(List<Vector2Int> hashset)
+    private void OnMatch(ComboMatchEvent e)
     {
-        foreach(Vector2Int position in hashset)
+        foreach (Vector2Int position in e.gemPositions)
         {
             var sprite = GetObject();
 

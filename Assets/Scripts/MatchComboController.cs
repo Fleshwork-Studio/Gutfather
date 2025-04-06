@@ -7,15 +7,7 @@ public class MatchComboController : MonoBehaviour
 {
     public static MatchComboController Instance;
 
-    /// <summary>
-    /// Returns single match and theirs general data
-    /// </summary>
-    public event Action<MatchType, GemTypeSO, Vector2Int> OnSingleMatch;
 
-    /// <summary>
-    /// Returns hashset of positions of a single match
-    /// </summary>
-    public event Action<List<Vector2Int>> OnMatchPositions;
 
     public enum MatchType
     {
@@ -65,7 +57,7 @@ public class MatchComboController : MonoBehaviour
 
             var gem = grid.GetValue(pos);
 
-            if (!IsValidGem(gem) || (i > 0 && gem.GetValue().GetType() != grid.GetValue(matchPositions[0]).GetValue().GetType()))
+            if (!IsValidGem(gem) || (i > 0 && gem.GetValue().GetGemType() != grid.GetValue(matchPositions[0]).GetValue().GetGemType()))
                 break;
 
             matchPositions.Add(pos);
@@ -91,13 +83,11 @@ public class MatchComboController : MonoBehaviour
         foreach (var pos in matchPositions)
             matches.Add(pos);
 
-        var gemTypeSO = grid.GetValue(x, y).GetValue().GetType();
+        var gemTypeSO = grid.GetValue(x, y).GetValue().GetGemType();
 
         // Triggers events
-        OnSingleMatch?.Invoke(matchType, gemTypeSO, matchPositions[matchPositions.Count / 2]);
-        OnMatchPositions?.Invoke(matchPositions);
-
-        // Debug.Log($"{(dx == 1 ? "Horizontal" : "Vertical")} {matchType} match type");
+        ComboMatchEvent eventData = new ComboMatchEvent { matchType = matchType, gemType = gemTypeSO, gemPositions = matchPositions };
+        Bus.Publish(eventData);
     }
 
     // Finds T and L shaped matches
@@ -110,7 +100,7 @@ public class MatchComboController : MonoBehaviour
 
         bool isCross = false;
 
-        GemTypeSO gemType = grid.GetValue(baseMatch[0]).GetValue().GetType(); // Main gem type
+        GemTypeSO gemType = grid.GetValue(baseMatch[0]).GetValue().GetGemType(); // Main gem type
 
         for (int x = 0; x < baseMatch.Count; x++)
         {
@@ -133,7 +123,7 @@ public class MatchComboController : MonoBehaviour
 
                     var gem = grid.GetValue(position);
 
-                    if (IsValidGem(gem) && gem.GetValue().GetType() == gemType)
+                    if (IsValidGem(gem) && gem.GetValue().GetGemType() == gemType)
                     {
                         additionalGems.Add(position);
                     }

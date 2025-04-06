@@ -76,7 +76,7 @@ public class Match3 : MonoBehaviour
 
         if (grid.GetValue(gridPos.x, gridPos.y).IsVoid()) return false; // Returns if selected grid is empty
 
-        var gemSelectedEvent = new NewGemSelected();
+        var gemSelectedEvent = new NewGemSelectedEvent();
 
         if (selectedGemPos == gridPos) // Deselects if clicking on already selected gem
         {

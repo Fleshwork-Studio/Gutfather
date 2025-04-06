@@ -11,10 +11,7 @@ public class Gem : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = type.sprite;
     }
 
-    public GemTypeSO GetType() => type;
+    public GemTypeSO GetGemType() => type;
 
     public void DestroyGem() => Destroy(gameObject);
 }
-
-
-

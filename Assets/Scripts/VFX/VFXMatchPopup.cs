@@ -16,14 +16,16 @@ public class VFXMatchPopup : MonoBehaviour
         matchPopupController = MatchPopupController.Instance;
     }
 
-    public void Enable(MatchComboController.MatchType matchType, GemTypeSO gemType, Vector2Int position)
+    public void Enable(ComboMatchEvent e)
     {
         gameObject.SetActive(true);
-        transform.position = (Vector2) position + Vector2.one * 0.5f;
 
-        SetText(matchType);
+        Vector2Int averagePosition = e.gemPositions[e.gemPositions.Count / 2];
+        transform.position = (Vector2)averagePosition + Vector2.one * 0.5f;
 
-        SetSprite(gemType);
+        SetText(e.matchType);
+
+        SetSprite(e.gemType);
 
         PlayAnim();
     }
