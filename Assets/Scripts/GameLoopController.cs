@@ -5,50 +5,94 @@ using UnityEngine;
 
 public class GameLoopController : MonoBehaviour
 {
+    enum GamePhase
+    {
+        PlayerTurn,
+        GemDestroying,
+        PlayerSkills,
+        EnemiesTurn,
+        EndOfBattle
+    }
     [SerializeField] InputReader inputReader;
 
     Match3 match3;
     MatchComboController matchComboController;
+    FightField fightField;
 
     List<Vector2Int> matches = new List<Vector2Int>();
 
-    private bool isPlayerTurn = true;
+    private GamePhase gamePhase;
+
+    private Vector2Int selectedGem;
 
     private void Start()
     {
         match3 = Match3.Instance;
         matchComboController = MatchComboController.Instance;
+        fightField = FightField.Instance;
 
         inputReader.Fire += OnSelectGem;
+
+        gamePhase = GamePhase.PlayerTurn;
     }
 
-    private void OnDestroy()
+
+    private IEnumerator GameLoop()
     {
-        inputReader.Fire -= OnSelectGem;
+        yield return StartCoroutine(ChangeGamePhaseCoroutine(GamePhase.GemDestroying));
+        yield return StartCoroutine(ChangeGamePhaseCoroutine(GamePhase.PlayerSkills));
+        yield return StartCoroutine(ChangeGamePhaseCoroutine(GamePhase.EnemiesTurn));
+        yield return StartCoroutine(ChangeGamePhaseCoroutine(GamePhase.PlayerTurn));
     }
 
+
+    private IEnumerator ChangeGamePhaseCoroutine(GamePhase newPhase)
+    {
+        gamePhase = newPhase;
+        Debug.Log($"Current game phase: {gamePhase}");
+
+        switch (gamePhase)
+        {
+            case GamePhase.PlayerTurn:
+                yield break;
+
+            case GamePhase.GemDestroying:
+                yield return StartCoroutine(SwapGems(match3.GetSelectedGemPos(), selectedGem));
+                yield break;
+
+            case GamePhase.PlayerSkills:
+                yield break;
+
+            case GamePhase.EnemiesTurn:
+                yield return StartCoroutine(fightField.PerformEnemiesTurn());
+                yield break;
+
+            case GamePhase.EndOfBattle:
+                yield break;
+        }
+    }
+    #region GEM_SWAP
     private void OnSelectGem()
     {
-        if (!isPlayerTurn) return;
+        if (gamePhase != GamePhase.PlayerTurn) return;
 
         // Get click position
-        var gridPos = match3.GetGrid().GetXY(Camera.main.ScreenToWorldPoint(inputReader.Selected));
+        selectedGem = match3.GetGrid().GetXY(Camera.main.ScreenToWorldPoint(inputReader.Selected));
 
         // Check if gem selection can result in Gem Swap
-        bool succesfull = match3.OnGemSelect(gridPos);
+        bool succesfull = match3.OnGemSelect(selectedGem);
 
         // Run gameloop of player's match 3 if 'succesfull' is true
-        if (succesfull) StartCoroutine(RunGameLoop(match3.GetSelectedGemPos(), gridPos));
+        if (succesfull)
+            StartCoroutine(GameLoop());
     }
 
-    private IEnumerator RunGameLoop(Vector2Int gridPosA, Vector2Int gridPosB)
+    private IEnumerator SwapGems(Vector2Int gridPosA, Vector2Int gridPosB)
     {
-        isPlayerTurn = false;
-
-        // PART 1: gem swapping
         yield return StartCoroutine(match3.SwapGems(gridPosA, gridPosB));
 
-        do {
+        do
+        {
             // Matches
             matches = matchComboController.FindMatches(match3.GetGrid(), Match3.HEIGHT, Match3.WIDTH);
 
@@ -64,12 +108,10 @@ public class GameLoopController : MonoBehaviour
 
             match3.DeselectGem();
         } while (matches.Count > 0); // Return unitl there are no mathces on the board
-
-        // PART 1 END
-
-        // TODO: Part 2 with doing all player's collected abilities
-        // TODO: Part 3 - enemy's turn
-
-        isPlayerTurn = true;
+    }
+    #endregion
+    private void OnDestroy()
+    {
+        inputReader.Fire -= OnSelectGem;
     }
 }
