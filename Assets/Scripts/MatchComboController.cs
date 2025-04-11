@@ -2,14 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using System;
-
-public class MatchComboController : MonoBehaviour
-{
-    public static MatchComboController Instance;
-
-
-
-    public enum MatchType
+public enum MatchType
     {
         Null,
         Three3,
@@ -18,6 +11,9 @@ public class MatchComboController : MonoBehaviour
         Six6,
         Cross
     }
+public class MatchComboController : MonoBehaviour
+{
+    public static MatchComboController Instance;
 
     private void Awake()
     {

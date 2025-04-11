@@ -29,15 +29,15 @@ public class VFXMatchPopup : MonoBehaviour
 
         PlayAnim();
     }
-    private void SetText(MatchComboController.MatchType matchType)
+    private void SetText(MatchType matchType)
     {
         string textString = matchType switch
         {
 
-            MatchComboController.MatchType.Cross => "X",
-            MatchComboController.MatchType.Six6 => "6",
-            MatchComboController.MatchType.Five5 => "5",
-            MatchComboController.MatchType.Four4 => "4",
+            MatchType.Cross => "X",
+            MatchType.Six6 => "6",
+            MatchType.Five5 => "5",
+            MatchType.Four4 => "4",
             _ => "3",
         };
 

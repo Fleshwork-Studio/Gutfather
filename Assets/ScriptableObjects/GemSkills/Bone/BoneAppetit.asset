@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215338cae1f43ab40bdedb8791c4b24f, type: 3}
+  m_Name: BoneAppetit
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: f492528d49a1fe6438eb6b1852d95572, type: 3}
+  matchType: 2
+  title: "Bone App\xE9tit"
+  description: Slash atack that deals damage to all enemies

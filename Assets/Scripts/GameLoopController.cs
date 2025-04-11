@@ -18,6 +18,7 @@ public class GameLoopController : MonoBehaviour
     Match3 match3;
     MatchComboController matchComboController;
     FightField fightField;
+    PlayerSkillsController playerSkillsController;
 
     List<Vector2Int> matches = new List<Vector2Int>();
 
@@ -30,6 +31,7 @@ public class GameLoopController : MonoBehaviour
         match3 = Match3.Instance;
         matchComboController = MatchComboController.Instance;
         fightField = FightField.Instance;
+        playerSkillsController = PlayerSkillsController.Instance;
 
         inputReader.Fire += OnSelectGem;
 
@@ -61,6 +63,7 @@ public class GameLoopController : MonoBehaviour
                 yield break;
 
             case GamePhase.PlayerSkills:
+                yield return StartCoroutine(playerSkillsController.UseSkills());
                 yield break;
 
             case GamePhase.EnemiesTurn:
