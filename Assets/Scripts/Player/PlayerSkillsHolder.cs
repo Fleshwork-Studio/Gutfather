@@ -9,13 +9,15 @@ public class PlayerSkillsHolder : MonoBehaviour
     public void AddSkill(SkillUnit skillUnit)
     {
         skillsList.Add(skillUnit);
-    } 
+    }
     public IEnumerator UseSkills()
     {
-        while(skillsList.Count > 0)
+        while (skillsList.Count > 0)
         {
             yield return StartCoroutine(skillsList[0].UseSkill());
-            skillsList.RemoveAt(0);
+            var skill = skillsList[0];
+            skillsList.Remove(skill);
+            Destroy(skill.gameObject);
         }
 
         yield return null;
