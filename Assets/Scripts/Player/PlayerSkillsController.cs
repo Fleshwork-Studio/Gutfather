@@ -8,7 +8,6 @@ public class PlayerSkillsController : MonoBehaviour
     public static PlayerSkillsController Instance;
     [SerializeField] private PlayerSkillsHolder skillsHolder;
     [SerializeField] private Transform skillPrefab;
-    [SerializeField] private GemSkillsEncyclopediaSO skillsEncyclopedia;
     [SerializeField] private Transform parentHolder;
 
     private void Awake()
@@ -22,7 +21,7 @@ public class PlayerSkillsController : MonoBehaviour
         Transform newSkill = Instantiate(skillPrefab, parentHolder);
 
         var skillScript = newSkill.GetComponent<SkillUnit>();
-        GemSkillSO gemSkillSO = skillsEncyclopedia.GetGemList(e.gemType)?.GetSkill(e.matchType);
+        GemSkillSO gemSkillSO = e.gemType.skills?.GetSkill(e.matchType);
         skillScript.SetParametres(e.matchType, e.gemType, gemSkillSO);
 
         skillsHolder.AddSkill(skillScript);

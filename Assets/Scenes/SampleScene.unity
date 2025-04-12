@@ -287,7 +287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillsHolder: {fileID: 1272970747}
   skillPrefab: {fileID: 7678014153035614449, guid: 9a04218e350476c449df155110c141a7, type: 3}
-  skillsEncyclopedia: {fileID: 11400000, guid: d4afe3b780fe8194bb9b76e3a4e5c398, type: 2}
   parentHolder: {fileID: 479660757}
 --- !u!1 &346124872
 GameObject:
@@ -11426,7 +11425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2009502600942328031, guid: 3379f4e5302a872439b161404dc5c30a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2011012318601391229, guid: 3379f4e5302a872439b161404dc5c30a, type: 3}
       propertyPath: m_Color.g

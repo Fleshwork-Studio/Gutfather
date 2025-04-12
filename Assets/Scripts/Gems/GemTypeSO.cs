@@ -5,6 +5,7 @@ public class GemTypeSO : ScriptableObject
 {
     public GemTypeEnum gemType;
     public Sprite sprite;
+    public GemSkillsListSO skills;
 }
 public enum GemTypeEnum
 {

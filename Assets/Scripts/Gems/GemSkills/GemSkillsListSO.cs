@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GemSkillsList", menuName = "Match3/Gem Skills List")]
 public class GemSkillsListSO : ScriptableObject
 {
-    public GemTypeSO gemType;
     public List<GemSkillSO> list = new List<GemSkillSO>();
 
     public GemSkillSO GetSkill(MatchType matchType)
