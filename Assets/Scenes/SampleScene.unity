@@ -901,7 +901,7 @@ GameObject:
   - component: {fileID: 995915823}
   - component: {fileID: 995915822}
   m_Layer: 0
-  m_Name: FightField
+  m_Name: ---FightField---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

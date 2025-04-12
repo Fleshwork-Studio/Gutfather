@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6953347049403676207}
   - component: {fileID: 7274474793328586806}
+  - component: {fileID: 6312068691577681756}
   m_Layer: 0
   m_Name: EnemyBlank
   m_TagString: Untagged
@@ -129,3 +130,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb21635ab2ff6fe44841765a94140564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthSystem: {fileID: 6312068691577681756}
+--- !u!114 &6312068691577681756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5386405870008814886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3beb97fc8b9058940890efeed2ab54fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100

@@ -8,7 +8,7 @@ public class FightSlot : MonoBehaviour
 
     public IEnumerator RunEnemyTurn()
     {
-        if(enemy != null)
+        if (enemy != null && enemy.IsAlive())
             yield return StartCoroutine(enemy.MakeMove());
 
         yield return null;
