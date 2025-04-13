@@ -25,12 +25,15 @@ public class SkillUnit : MonoBehaviour
 
         SetGemSkill();
 
-        Debug.Log($"Skill Unit of {gemType.gemType}, combo {matchType} created");
+        if (DebuggingConfig.SkillUnitCreated)
+            Debug.Log($"Skill Unit of {gemType.gemType}, combo {matchType} created");
     }
 
     public IEnumerator UseSkill()
     {
-        Debug.Log($"Used {matchType} skill of {gemType.gemType}");
+        if (DebuggingConfig.UsingPlayerSkills)
+            Debug.Log($"Used {matchType} skill of {gemType.gemType}");
+
         yield return gemSkills.UseSkillOfType(matchType);
     }
 

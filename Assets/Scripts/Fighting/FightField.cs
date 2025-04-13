@@ -17,7 +17,6 @@ public class FightField : MonoBehaviour
         foreach (FightSlot slot in fightSlots)
             yield return StartCoroutine(slot.RunEnemyTurn());
 
-        Debug.Log("Enemies turn ended");
         yield return null;
     }
 }

@@ -51,7 +51,9 @@ public class GameLoopController : MonoBehaviour
     private IEnumerator ChangeGamePhaseCoroutine(GamePhase newPhase)
     {
         gamePhase = newPhase;
-        Debug.Log($"Current game phase: {gamePhase}");
+        
+        if (DebuggingConfig.GameState)
+            Debug.Log($"Current game phase: {gamePhase}");
 
         switch (gamePhase)
         {
