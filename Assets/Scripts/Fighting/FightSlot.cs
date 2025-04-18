@@ -15,9 +15,11 @@ public class FightSlot : MonoBehaviour
 
         yield return null;
     }
-    public void SetIndex (int i) => index = i;
-    void OnMouseDown()
+    public void SetIndex(int i) => index = i;
+    private void OnMouseDown()
     {
         OnSelected?.Invoke(index);
     }
+
+    public Enemy GetEnemy() => enemy;
 }

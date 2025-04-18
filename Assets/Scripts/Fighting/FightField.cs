@@ -38,4 +38,17 @@ public class FightField : MonoBehaviour
 
         selectedSlot = fightSlots[index];
     }
+    public Enemy GetSelectedEnemy() => selectedSlot.GetEnemy();
+    public List<Enemy> GetAllAliveEnemies()
+    {
+        List<Enemy> enemiesList = new List<Enemy>();
+
+        foreach (FightSlot slot in fightSlots)
+        {
+            Enemy enemy = slot.GetEnemy();
+            if (enemy.IsAlive()) enemiesList.Add(enemy);
+        }
+
+        return enemiesList;
+    }
 }
