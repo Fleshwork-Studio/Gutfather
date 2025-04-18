@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class FightSlot : MonoBehaviour
 {
+    public event Action OnEnemyDeath;
     public event Action<int> OnSelected;
     [SerializeField] private Enemy enemy;
     private int index;
+    void Start()
+    {
+        enemy.OnDeathEvent += EnemyDied;
+    }
     public IEnumerator RunEnemyTurn()
     {
         if (enemy != null && enemy.IsAlive())
@@ -19,6 +24,12 @@ public class FightSlot : MonoBehaviour
     private void OnMouseDown()
     {
         OnSelected?.Invoke(index);
+    }
+    private void EnemyDied()
+    {
+        OnEnemyDeath?.Invoke();
+
+        enemy.OnDeathEvent -= EnemyDied;
     }
 
     public Enemy GetEnemy() => enemy;

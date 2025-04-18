@@ -31,30 +31,30 @@ public class GemSkills : MonoBehaviour
 
     public virtual IEnumerator UseBasicSkill() // 3 in a row
     {
-        Debug.Log("Basic Atack");
+        //Debug.Log("Basic Atack");
         yield return new WaitForSeconds(1f);
     }
     public virtual IEnumerator UseMediumSkill() // 4 in a row
     {
-        Debug.Log("Medium Atack");
+        //Debug.Log("Medium Atack");
         yield return new WaitForSeconds(1f);
 
     }
     public virtual IEnumerator UseCrossSkill() // Cross-X combo
     {
-        Debug.Log("Cross Atack");
+        //Debug.Log("Cross Atack");
         yield return new WaitForSeconds(1f);
 
     }
     public virtual IEnumerator UseStrongSkill() // 5 in a row
     {
-        Debug.Log("Strong Atack");
+        //Debug.Log("Strong Atack");
         yield return new WaitForSeconds(1f);
 
     }
     public virtual IEnumerator UseHyperSkill() // 6 in a row
     {
-        Debug.Log("Hyper Atack");
+        //Debug.Log("Hyper Atack");
         yield return new WaitForSeconds(1f);
     }
 }
